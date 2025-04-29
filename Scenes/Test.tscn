@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://seb7xop171iq"]
+[gd_scene load_steps=12 format=3 uid="uid://seb7xop171iq"]
 
 [ext_resource type="Script" uid="uid://jckwg0sfvvae" path="res://Scripts/Player.gd" id="1_ko2s7"]
 [ext_resource type="Script" uid="uid://cnnv5qyr8jcm" path="res://Scripts/PlayerCamera.gd" id="2_gxb1y"]
-[ext_resource type="Texture2D" uid="uid://skpm0v1nogus" path="res://Assets/Sprites/Fumico.png" id="3_0dy5s"]
+[ext_resource type="Texture2D" uid="uid://0e40h233dfu6" path="res://Assets/Sprites/Snowflake/Snowflake.png" id="3_0dy5s"]
+[ext_resource type="Texture2D" uid="uid://kxi4o0spn16q" path="res://Assets/Sprites/Ghost/Ghost.png" id="4_f2nln"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gxb1y"]
 sky_top_color = Color(0, 0.554118, 0.938511, 1)
@@ -24,10 +25,16 @@ glow_enabled = true
 albedo_color = Color(1, 0.992157, 0.529412, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_efk68"]
+radius = 0.390988
+height = 1.57
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_0dy5s"]
-height = 1.82858
-radius = 0.347656
+height = 1.57
+radius = 0.265137
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f2nln"]
+height = 1.68
+radius = 0.259277
 
 [node name="Node3D" type="Node3D"]
 
@@ -50,26 +57,43 @@ size = Vector3(20, 0.5, 20)
 script = ExtResource("1_ko2s7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 0)
 shape = SubResource("CapsuleShape3D_efk68")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40319, 0)
 script = ExtResource("2_gxb1y")
 
-[node name="Character" type="Node3D" parent="."]
+[node name="Snowflake" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -4.84348)
 
-[node name="Sprite3D" type="Sprite3D" parent="Character"]
-transform = Transform3D(-0.12, 0, -1.81195e-08, 0, 0.12, 0, 1.81195e-08, 0, -0.12, 0, 0.989192, 0)
+[node name="Sprite3D" type="Sprite3D" parent="Snowflake"]
+transform = Transform3D(-0.085, 0, -1.28346e-08, 0, 0.085, 0, 1.28346e-08, 0, -0.085, 0, 0.894778, 0)
 cast_shadow = 2
 billboard = 2
 alpha_cut = 3
 texture_filter = 1
 texture = ExtResource("3_0dy5s")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Character"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Snowflake"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.984177, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Snowflake/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 0)
 shape = SubResource("CylinderShape3D_0dy5s")
+
+[node name="Ghost" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.554749, 0, -4.84348)
+
+[node name="Sprite3D" type="Sprite3D" parent="Ghost"]
+transform = Transform3D(-0.088, 0, -1.32876e-08, 0, 0.088, 0, 1.32876e-08, 0, -0.088, 0, 0.91677, 0)
+cast_shadow = 2
+billboard = 2
+alpha_cut = 3
+texture_filter = 1
+texture = ExtResource("4_f2nln")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ghost"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ghost/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84, 0)
+shape = SubResource("CylinderShape3D_f2nln")
